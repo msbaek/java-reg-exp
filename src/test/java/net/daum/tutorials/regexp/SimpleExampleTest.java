@@ -39,4 +39,13 @@ public class SimpleExampleTest {
         for(String c : candidates.notMatching())
             assertThat(p.matcher(c).matches(), is(false));
     }
+
+    @Test
+    public void case_insensitive_searches_with_pattern_flags() {
+        String regex = "A really long sentence";
+        String candidate = "A really long SENTENCE";
+        Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(candidate);
+        assertThat(m.matches(), is(true));
+    }
 }
