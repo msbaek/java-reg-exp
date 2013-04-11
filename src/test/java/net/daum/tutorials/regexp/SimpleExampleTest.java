@@ -185,4 +185,14 @@ public class SimpleExampleTest {
         assertThat(matcher.group(1), not("2004"));
         assertThat(matcher.group(1), is("4"));
     }
+
+    @Test
+    public void reluctant_try_to_match_as_little_as_possible() {
+        String regex = "^.*?([0-9]+)";
+        String candidate = "copyright 2004";
+        Matcher matcher = Pattern.compile(regex).matcher(candidate);
+        assertThat(matcher.matches(), is(true));
+        assertThat(matcher.group(1), is("2004"));
+        assertThat(matcher.group(1), not("4"));
+    }
 }
