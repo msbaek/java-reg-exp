@@ -1,0 +1,34 @@
+syntax
+Pattern Description
+.       Any character
+^       Beginning of line
+$       End of line
+[]      Character classes*
+        [A-Za-z] [0-9] [.]
+|       or operator
+( )     Group delimiter
+
+command & boundary
+\d      Any digit [0-9]
+\D      Any non-digit [^0-9]
+\w      Word character [A-Za-z_0-9]
+\W      Any non-word character
+\s      White space
+\b      Word boundary
+
+multiplicity
+?       0 or 1
+*       0 or more
++       1 or more
+{n}     Exactly n times
+{n,}    At least n times
+{n,m}   At least n times but no more than m times
+
+posix character classes
+\p{Lower} A lowercase letter [a-z]
+\p{Alpha} An upper- or lowercase letter
+\p{Alnum} A number or letter
+\p{Punct} Punctuation
+\p{Cntrl} A control character (\x00-\x1F\x7F)
+\p{Graph} Any visible character
+\p{Space} A whitespace character
