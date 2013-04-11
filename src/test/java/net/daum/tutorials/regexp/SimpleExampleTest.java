@@ -235,4 +235,20 @@ public class SimpleExampleTest {
         assertThat(m.group(1), is("list item"));
         assertThat(p.matcher(nonMatchingCandidate).find(), is(false));
     }
+
+    @Test
+    public void file_name_with_negative_lookahead() {
+        // .*[.](?!bat$|exe$).*$
+        String regex = ".*[.](?!bat$|exe$).*$";
+        candidates
+                .addMatchers("foo.batch")
+                .addMatchers("foo.doc")
+                .addNonMatchers("foo.bat")
+                .addNonMatchers("foo.exe");
+        Pattern p = Pattern.compile(regex);
+        for(String s : candidates.thatMatch())
+            assertThat(p.matcher(s).matches(), is(true));
+        for(String s : candidates.notMatching())
+            assertThat(p.matcher(s).matches(), is(false));
+    }
 }
