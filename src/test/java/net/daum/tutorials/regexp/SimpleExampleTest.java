@@ -137,4 +137,18 @@ public class SimpleExampleTest {
             assertThat(m.group(1), is(groups[i++]));
         }
     }
+
+    @Test
+    public void phone_numbers() {
+        // (\d{3})?\d{3}\d{4}
+        String regexp ="(\\d{3})?\\d{3}\\d{4}";
+        candidates
+                .addMatchers("404-555-1234")
+                .addMatchers("(404) 555  - 1234")
+                .addMatchers("404.555.1234");
+        for(String num : candidates.thatMatch()) {
+            String scrubbed = num.replaceAll("\\p{Punct}|\\s", "");
+            assertThat(Pattern.compile(regexp).matcher(scrubbed).matches(), is(true));
+        }
+    }
 }
