@@ -122,4 +122,19 @@ public class SimpleExampleTest {
         assertThat(m.group(2), is("555"));
         assertThat(m.group(3), is("1234"));
     }
+
+    @Test
+    public void time() {
+        // (1[012]|[1-9]):[0-5][0-9]\s(am|pm)
+        String regex = "(1[012]|[1-9]):[0-5][0-9]\\s(am|pm)";
+        String [] times = {"9:30 am", "10:00 pm"};
+        Pattern pattern = Pattern.compile(regex);
+        String [] groups = {"9", "10"};
+        int i = 0;
+        for(String time : times) {
+            Matcher m = pattern.matcher(time);
+            assertThat(m.matches(), is(true));
+            assertThat(m.group(1), is(groups[i++]));
+        }
+    }
 }
