@@ -221,4 +221,18 @@ public class SimpleExampleTest {
         assertThat(m.group(), is("\"Regular Expression\""));
         assertThat(m.find(), is(false));
     }
+
+    @Test
+    public void simple_lookahead() {
+        // <li>(.*)(?=</li>)
+        String regex = "<li>(.*)(?=</li>)";
+        String candidateThatMatches = "<li>list item</li>";
+        String nonMatchingCandidate = "<li>list item";
+
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(candidateThatMatches);
+        assertThat(m.find(), is(true));
+        assertThat(m.group(1), is("list item"));
+        assertThat(p.matcher(nonMatchingCandidate).find(), is(false));
+    }
 }
