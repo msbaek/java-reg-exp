@@ -251,4 +251,15 @@ public class SimpleExampleTest {
         for(String s : candidates.notMatching())
             assertThat(p.matcher(s).matches(), is(false));
     }
+
+    @Test
+    public void wrap_around() {
+        // (?<=<li>).*(?=</li>)
+        String regex = "(?<=<li>).*(?=</li>)";
+        String candidate = "<li>Now is the time for all good men</li>";
+        Matcher m = Pattern.compile(regex).matcher(candidate);
+        assertThat(m.find(), is(true));
+        assertThat(m.groupCount(), is(0));
+        assertThat(m.group(), is("Now is the time for all good men"));
+    }
 }
