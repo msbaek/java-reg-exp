@@ -195,4 +195,30 @@ public class SimpleExampleTest {
         assertThat(matcher.group(1), is("2004"));
         assertThat(matcher.group(1), not("4"));
     }
+
+    @Test
+    public void greedy_backtrack() {
+        // ".*"
+        String regex = "\".*\"";
+        String candiate =
+                "The name \"regex\" abbreviates \"Regular Expression\".";
+        Matcher m = Pattern.compile(regex).matcher(candiate);
+        assertThat(m.find(), is(true));
+        assertThat(m.group(),
+                is("\"regex\" abbreviates \"Regular Expression\""));
+    }
+
+    @Test
+    public void reluctant_backtrack() {
+        // ".*"
+        String regex = "\".*?\"";
+        String candiate =
+                "The name \"regex\" abbreviates \"Regular Expression\".";
+        Matcher m = Pattern.compile(regex).matcher(candiate);
+        assertThat(m.find(), is(true));
+        assertThat(m.group(), is("\"regex\""));
+        assertThat(m.find(), is(true));
+        assertThat(m.group(), is("\"Regular Expression\""));
+        assertThat(m.find(), is(false));
+    }
 }
