@@ -96,4 +96,17 @@ public class SimpleExampleTest {
         while(m.find())
             assertThat(m.group(1), is(matchers[i++]));
     }
+
+    @Test
+    public void phone_number() {
+        // ^\((\d{3})\)\s(\d{3})-(\d{4})$
+        String regex = "^\\((\\d{3})\\)\\s(\\d{3})-(\\d{4})$";
+        String phoneNumber = "(404) 555-1234";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher m = pattern.matcher(phoneNumber);
+        assertThat(m.matches(), is(true));
+        assertThat(m.group(1), is("404"));
+        assertThat(m.group(2), is("555"));
+        assertThat(m.group(3), is("1234"));
+    }
 }
