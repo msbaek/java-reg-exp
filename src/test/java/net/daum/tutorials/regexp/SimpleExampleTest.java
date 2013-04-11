@@ -162,4 +162,16 @@ public class SimpleExampleTest {
         assertThat(m.matches(), is(true));
         assertThat(m.groupCount(), is(0));
     }
+
+    @Test
+    public void more_non_capturing_sub_groups() {
+        // (?:<li>)(.*)(?:</li>)
+        String regex = "(?:<li>)(.*)(?:</li>)";
+        String candidate = "<li>Now is the time for all good men</li>";
+        Matcher m = Pattern.compile(regex).matcher(candidate);
+        assertThat(m.matches(), is(true));
+        assertThat(m.groupCount(), is(1));
+        assertThat(m.group(), is(candidate));
+        assertThat(m.group(1), is("Now is the time for all good men"));
+    }
 }
