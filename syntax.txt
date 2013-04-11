@@ -23,3 +23,12 @@ multiplicity
 {n}     Exactly n times
 {n,}    At least n times
 {n,m}   At least n times but no more than m times
+
+posix character classes
+\p{Lower} A lowercase letter [a-z]
+\p{Alpha} An upper- or lowercase letter
+\p{Alnum} A number or letter
+\p{Punct} Punctuation
+\p{Cntrl} A control character (\x00-\x1F\x7F)
+\p{Graph} Any visible character
+\p{Space} A whitespace character
