@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
 public class SimpleExampleTest {
@@ -173,5 +174,15 @@ public class SimpleExampleTest {
         assertThat(m.groupCount(), is(1));
         assertThat(m.group(), is(candidate));
         assertThat(m.group(1), is("Now is the time for all good men"));
+    }
+
+    @Test
+    public void greediness_try_to_match_as_many_characters_as_possible() {
+        String regex = "^.*([0-9]+)";
+        String candidate = "copyright 2004";
+        Matcher matcher = Pattern.compile(regex).matcher(candidate);
+        assertThat(matcher.matches(), is(true));
+        assertThat(matcher.group(1), not("2004"));
+        assertThat(matcher.group(1), is("4"));
     }
 }
