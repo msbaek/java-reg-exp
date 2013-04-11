@@ -31,12 +31,12 @@ public class SimpleExampleTest {
                 .addNonMatchers("Homer9_simpson@somewhere.org");
 
         Pattern p = Pattern.compile(emailRegex);
-        for(String c : candidates.thatMatch()) {
+        for (String c : candidates.thatMatch()) {
             Matcher m = p.matcher(c);
             assertThat(c.matches(emailRegex), is(true));
         }
 
-        for(String c : candidates.notMatching())
+        for (String c : candidates.notMatching())
             assertThat(p.matcher(c).matches(), is(false));
     }
 
@@ -47,5 +47,24 @@ public class SimpleExampleTest {
         Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(candidate);
         assertThat(m.matches(), is(true));
+    }
+
+    @Test
+    public void search_with_find() {
+        String odysseyPartOne =
+                "Athene, you are my favorite" +
+                        "Athene, you are my favorite" +
+                        "Athene, you are my favorite" +
+                        "Athene, you are my favorite" +
+                        "Athene, you are my favorite";
+        String regexToMatch = "Athene";
+        Pattern p = Pattern.compile(regexToMatch);
+        Matcher m = p.matcher(odysseyPartOne);
+        int count = 0;
+        while(m.find()) {
+            count++;
+            assertThat(m.group(), is(regexToMatch));
+        }
+        assertThat(count, is(5));
     }
 }
