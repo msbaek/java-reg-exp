@@ -61,7 +61,7 @@ public class SimpleExampleTest {
         Pattern p = Pattern.compile(regexToMatch);
         Matcher m = p.matcher(odysseyPartOne);
         int count = 0;
-        while(m.find()) {
+        while (m.find()) {
             count++;
             assertThat(m.group(), is(regexToMatch));
         }
@@ -72,10 +72,10 @@ public class SimpleExampleTest {
     public void groups() {
         String regex = "(\\w)(\\d)";
         String candidates = "J2 comes before J5, which both come before H7";
-        String [] matchers = {"J2", "J5", "H7"};
+        String[] matchers = {"J2", "J5", "H7"};
         Matcher m = Pattern.compile(regex).matcher(candidates);
         int i = 0;
-        while(m.find()) {
+        while (m.find()) {
             assertThat(m.group(), is(matchers[i]));
             assertThat(m.group(1), is(matchers[i].substring(0, 1)));
             assertThat(m.group(2), is(matchers[i].substring(1, 2)));
@@ -91,9 +91,9 @@ public class SimpleExampleTest {
                 "The froofroo tutu cost more than than the gogo boots.";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(cadidate);
-        String [] matchers = {"froo", "tu", "go"};
+        String[] matchers = {"froo", "tu", "go"};
         int i = 0;
-        while(m.find())
+        while (m.find())
             assertThat(m.group(1), is(matchers[i++]));
     }
 
@@ -127,11 +127,11 @@ public class SimpleExampleTest {
     public void time() {
         // (1[012]|[1-9]):[0-5][0-9]\s(am|pm)
         String regex = "(1[012]|[1-9]):[0-5][0-9]\\s(am|pm)";
-        String [] times = {"9:30 am", "10:00 pm"};
+        String[] times = {"9:30 am", "10:00 pm"};
         Pattern pattern = Pattern.compile(regex);
-        String [] groups = {"9", "10"};
+        String[] groups = {"9", "10"};
         int i = 0;
-        for(String time : times) {
+        for (String time : times) {
             Matcher m = pattern.matcher(time);
             assertThat(m.matches(), is(true));
             assertThat(m.group(1), is(groups[i++]));
@@ -141,14 +141,25 @@ public class SimpleExampleTest {
     @Test
     public void phone_numbers() {
         // (\d{3})?\d{3}\d{4}
-        String regexp ="(\\d{3})?\\d{3}\\d{4}";
+        String regexp = "(\\d{3})?\\d{3}\\d{4}";
         candidates
                 .addMatchers("404-555-1234")
                 .addMatchers("(404) 555  - 1234")
                 .addMatchers("404.555.1234");
-        for(String num : candidates.thatMatch()) {
+        for (String num : candidates.thatMatch()) {
             String scrubbed = num.replaceAll("\\p{Punct}|\\s", "");
             assertThat(Pattern.compile(regexp).matcher(scrubbed).matches(), is(true));
         }
+    }
+
+    @Test
+    public void non_capturing_groups() {
+        // add sigil(?:) in order not to capture
+        // (?:\d{4}-)?\d{3}-\d{4}
+        String regexp = "(?:\\d{3}-)?\\d{3}-\\d{4}";
+        String candidate = "404-555-1234";
+        Matcher m = Pattern.compile(regexp).matcher(candidate);
+        assertThat(m.matches(), is(true));
+        assertThat(m.groupCount(), is(0));
     }
 }
