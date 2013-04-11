@@ -67,4 +67,19 @@ public class SimpleExampleTest {
         }
         assertThat(count, is(5));
     }
+
+    @Test
+    public void groups() {
+        String regex = "(\\w)(\\d)";
+        String candidates = "J2 comes before J5, which both come before H7";
+        String [] matchers = {"J2", "J5", "H7"};
+        Matcher m = Pattern.compile(regex).matcher(candidates);
+        int i = 0;
+        while(m.find()) {
+            assertThat(m.group(), is(matchers[i]));
+            assertThat(m.group(1), is(matchers[i].substring(0, 1)));
+            assertThat(m.group(2), is(matchers[i].substring(1, 2)));
+            i++;
+        }
+    }
 }
