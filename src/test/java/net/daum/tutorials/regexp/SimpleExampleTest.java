@@ -82,4 +82,18 @@ public class SimpleExampleTest {
             i++;
         }
     }
+
+    @Test
+    public void repeat_words() {
+        // \b(\w+)\1\b \b:word boundary
+        String regex = "\\b(\\w+)\\1\\b";
+        String cadidate =
+                "The froofroo tutu cost more than than the gogo boots.";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(cadidate);
+        String [] matchers = {"froo", "tu", "go"};
+        int i = 0;
+        while(m.find())
+            assertThat(m.group(1), is(matchers[i++]));
+    }
 }
